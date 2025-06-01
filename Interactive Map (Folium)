@@ -1,0 +1,13 @@
+import folium
+
+# Coordinates of SpaceX launch sites
+launch_sites = {
+    "CCAFS LC-40": [28.562302, -80.577356],
+    "KSC LC-39A": [28.6080585, -80.6039558],
+    "VAFB SLC-4E": [34.632834, -120.610746]
+}
+
+m = folium.Map(location=[28.5, -80.6], zoom_start=5)
+for site, coord in launch_sites.items():
+    folium.Marker(coord, popup=site).add_to(m)
+m.save("spacex_sites_map.html")
