@@ -1,0 +1,14 @@
+import dash
+from dash import dcc, html
+import plotly.express as px
+
+app = dash.Dash(__name__)
+fig = px.pie(df_api, names='launch_site.site_name', title='Launches by Site')
+
+app.layout = html.Div([
+    html.H1("SpaceX Falcon 9 Dashboard"),
+    dcc.Graph(figure=fig)
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
