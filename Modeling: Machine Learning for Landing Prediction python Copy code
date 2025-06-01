@@ -1,0 +1,31 @@
+# Prepare features and labels
+features = df_api[['flight_number', 'payload_mass_kg', 'launch_site_site_name_CCAFS SLC 40', 'launch_site_site_name_KSC LC 39A', 'orbit_LEO', 'orbit_GTO']]
+labels = df_api['LandingClass']
+
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Decision Tree
+dtree = DecisionTreeClassifier(max_depth=4)
+dtree.fit(X_train_scaled, y_train)
+y_pred = dtree.predict(X_test_scaled)
+print("Decision Tree Accuracy:", dtree.score(X_test_scaled, y_test))
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+
+# Logistic Regression
+lr = LogisticRegression()
+lr.fit(X_train_scaled, y_train)
+print("Logistic Regression Accuracy:", lr.score(X_test_scaled, y_test))
+
+# KNN
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train_scaled, y_train)
+print("KNN Accuracy:", knn.score(X_test_scaled, y_test))
+
+# SVM
+svm = SVC(kernel='linear')
+svm.fit(X_train_scaled, y_train)
+print("SVM Accuracy:", svm.score(X_test_scaled, y_test))
