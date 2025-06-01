@@ -1,0 +1,13 @@
+# Example: Clean landing outcome into binary class
+def get_landing_class(outcome):
+    if "Success" in outcome:
+        return 1
+    else:
+        return 0
+
+df_api['LandingClass'] = df_api['rocket.first_stage.cores'].apply(
+    lambda x: get_landing_class(x[0]['landing_intent']) if isinstance(x, list) and len(x) > 0 else 0
+)
+
+# Example: One-hot encode categorical columns
+df_model = pd.get_dummies(df_api[['launch_site.site_name', 'rocket.second_stage.payloads', 'rocket.rocket_name']], drop_first=True)
