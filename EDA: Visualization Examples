@@ -1,0 +1,13 @@
+# Success by Launch Site
+plt.figure(figsize=(10,6))
+sns.countplot(x='launch_site.site_name', hue='LandingClass', data=df_api)
+plt.title("Landing Success Count by Launch Site")
+plt.xlabel("Launch Site")
+plt.ylabel("Count")
+plt.show()
+
+# Payload vs Outcome
+plt.figure(figsize=(10,6))
+sns.scatterplot(x='payload_mass_kg', y='LandingClass', hue='orbit', data=df_api)
+plt.title("Payload vs. Landing Outcome by Orbit")
+plt.show()
