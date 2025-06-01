@@ -1,0 +1,8 @@
+# REST API - SpaceX Falcon 9 launches (v3 endpoint, returns JSON)
+spacex_api_url = "https://api.spacexdata.com/v3/launches"
+response = requests.get(spacex_api_url)
+data = response.json()
+
+# Flatten JSON to DataFrame
+df_api = pd.json_normalize(data)
+print(df_api.head())
