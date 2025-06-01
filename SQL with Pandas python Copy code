@@ -1,0 +1,13 @@
+import sqlite3
+
+# Save to sqlite3 for SQL queries
+conn = sqlite3.connect(':memory:')
+df_api.to_sql('spacex', conn, index=False)
+
+# Example SQL: Unique Launch Sites
+query = "SELECT DISTINCT launch_site_site_name FROM spacex"
+print(pd.read_sql(query, conn))
+
+# Example SQL: Total payload mass to ISS
+query = "SELECT SUM(payload_mass_kg) FROM spacex WHERE orbit='ISS'"
+print(pd.read_sql(query, conn))
