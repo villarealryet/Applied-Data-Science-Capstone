@@ -1,0 +1,21 @@
+url = "https://en.wikipedia.org/w/index.php?title=List_of_Falcon_9_and_Falcon_Heavy_launches&oldid=1027686922"
+html = requests.get(url).text
+soup = BeautifulSoup(html, "html.parser")
+
+# Find tables
+tables = soup.find_all('table', "wikitable plainrowheaders collapsible")
+launch_table = tables[0]  # Sometimes [2] depending on page version
+
+# Extract header names
+def extract_column_from_header(th_tag):
+    for child in ("br", "a", "sup"):
+        rem = th_tag.find(child)
+        if rem: rem.extract()
+    text = unicodedata.normalize("NFKD", " ".join(th_tag.stripped_strings)).strip()
+    return text if text and not text.isdigit() else None
+
+column_names = []
+for th in launch_table.find_all("th"):
+    name = extract_column_from_header(th)
+    if name: column_names.append(name)
+print(column_names)
